@@ -13,7 +13,7 @@
 
 const game = {
     title: 'Guess the Number!',
-    biggestNum: 100,
+    biggestNum: 5,
     smallestNum: 1,
     secretNum: null,
     prevGuesses: [],
@@ -45,7 +45,7 @@ const game = {
     validateUserInput(input) {
         let inputIsNumber = (typeof input === 'number')
         let inputIsInRange = (input >= this.smallestNum && input <= this.biggestNum)
-        return (inputIsNumber && inputIsInRange) ? input : false
+        return (inputIsNumber && inputIsInRange) ? true : false
     },
 }
 
@@ -71,12 +71,13 @@ const testValidateUserInput = () => {
         NaN, 
         Infinity, 
         {}, 
-        [], 
+        [],
         game.biggestNum + 1,
         game.smallestNum - 1,
-        "bob",
-        "2",
-        "0",
+        'big horse neck',
+        '',
+        '2',
+        'null',
         ...knownValidNumbers,
     ]
 
