@@ -35,18 +35,19 @@ const game = {
     getGuess() {        
         let message = `Enter a guess between ${this.smallestNum} and ${this.biggestNum}`
         let userInput = null
+        let isNumber = null
+        let isInRange = null
         // 1) Prompt user for a number
         do {
             userInput = window.prompt(message)
             userInput = parseInt(userInput) // convert input to number
-        } while(this.validateUserInput(userInput) === false) // 2) validate input
+            
+            // 2) validate input
+            isNumber = (typeof userInput === 'number')
+            isInRange = (userInput >= this.smallestNum && userInput <= this.biggestNum)
+        } while((isNumber && isInRange) === false)
 
         return userInput
-    },
-    validateUserInput(input) {
-        let inputIsNumber = (typeof input === 'number')
-        let inputIsInRange = (input >= this.smallestNum && input <= this.biggestNum)
-        return (inputIsNumber && inputIsInRange) ? true : false
     },
     render(guess) {
         if(guess === this.secretNum) {
@@ -65,7 +66,7 @@ const game = {
             console.log(`Your guess is too ${hint}`)
             console.log(`Previous guesses: ${prevGuessesString}`)
         }
-    }
+    },
 }
 
 
