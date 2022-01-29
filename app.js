@@ -71,11 +71,11 @@ const game = {
         } while(this.isValidInput(userInput, minNum, maxNum) === false)
         return userInput
     },
-    setSmallestNum(x) {
+    setSmallestNum() {
         let message = 'Enter the smallest number'
         this.smallestNum = this.getNumFromUser(message, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY)
     },
-    setBiggestNum(x) {
+    setBiggestNum() {
         let message = 'Enter the biggest number'
         this.biggestNum = this.getNumFromUser(message, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY)
     },
