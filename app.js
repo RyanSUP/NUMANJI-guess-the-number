@@ -21,5 +21,19 @@ const game = {
         this.secretNum = Math.floor(Math.random() * 
         (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
     },
+    getGuess() {
+        let message = `Enter a guess between ${this.smallestNum} and ${this.biggestNum}`
+        userInput = window.prompt(message)
+        
+        // 1) Prompt user for a number
+        
+        // 2) validate user input (this could be another function)
+        // convert input to a number
+        // while input is NaN or input number is NOT between smallestNum & biggestNum,
+        // then continue asking for input.
+        // Once an input is valid, return input.
+        // ! window.prompt will return a string. Convert it to a number before returning it!
+
+    },
 }
 
