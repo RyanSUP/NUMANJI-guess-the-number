@@ -38,3 +38,49 @@ const game = {
     },
 }
 
+
+const testValidateUserInput = () => {
+    let knownValidNumbers = []
+    for(let i = game.smallestNum; i <= game.biggestNum; i++) {
+        knownValidNumbers.push(i)
+    }
+    let testCases = [ 
+        undefined, 
+        null, 
+        NaN, 
+        Infinity, 
+        {}, 
+        [], 
+        game.biggestNum + 1,
+        game.smallestNum - 1,
+        "bob",
+        "2",
+        "0",
+        ...knownValidNumbers,
+    ]
+
+    let passed = []
+    let failed = []
+
+    for(let testCase of testCases) {
+        let test = game.validateUserInput(testCase)
+        if(test) {
+            passed.push(testCase)
+        } else {
+            failed.push(testCase)
+        }
+
+        // (test) ? passed.push(testCase) : failed.push(testCase)
+        // Error - 'test cannot be accessed before it is defined' ??
+    }
+
+    console.log(' ================ PASSED ================ ')
+    passed.forEach(passedTest => {
+        console.log(passedTest)
+    })
+
+    console.log(' ================ FAILED ================ ')
+    failed.forEach(failedTest => {
+        console.log(failedTest)
+    })
+}
