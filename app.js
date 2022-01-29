@@ -13,7 +13,7 @@
 
 const game = {
     title: 'Guess the Number!',
-    biggestNum: 5,
+    biggestNum: 100,
     smallestNum: 1,
     secretNum: null,
     prevGuesses: [],
@@ -53,7 +53,14 @@ const game = {
             let numberOfGuess = this.prevGuesses.length
             console.log(`Congrats! You guessed the number in ${numberOfGuess} guesses!`)
         } else {
-            let hint = (guess > this.secretNum) ? 'high' : 'low'
+            let hint = null
+            if(guess > this.secretNum) {
+                hint = 'high'
+                this.biggestNum = guess
+            } else {
+                hint = 'low'
+                this.smallestNum = guess
+            }
             let prevGuessesString = this.prevGuesses.join(' ')
             console.log(`Your guess is too ${hint}`)
             console.log(`Previous guesses: ${prevGuessesString}`)
