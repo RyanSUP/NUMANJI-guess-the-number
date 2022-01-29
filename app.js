@@ -24,10 +24,11 @@ const game = {
 
         // 2) Ask the user for a guess while guess is not the secret number
         // track all the guesses in an array
-        let newGuess = ''
+        let newGuess = null
         do {
             newGuess = this.getGuess()
             this.prevGuesses.push(newGuess)
+            this.render(newGuess)
         } while(newGuess !== this.secretNum)
 
     },
@@ -47,6 +48,17 @@ const game = {
         let inputIsInRange = (input >= this.smallestNum && input <= this.biggestNum)
         return (inputIsNumber && inputIsInRange) ? true : false
     },
+    render(guess) {
+        if(guess === this.secretNum) {
+            let numberOfGuess = this.prevGuesses.length
+            console.log(`Congrats! You guessed the number in ${numberOfGuess} guesses!`)
+        } else {
+            let hint = (guess > this.secretNum) ? 'high' : 'low'
+            let prevGuessesString = this.prevGuesses.join(' ')
+            console.log(`Your guess is too ${hint}`)
+            console.log(`Previous guesses: ${prevGuessesString}`)
+        }
+    }
 }
 
 
