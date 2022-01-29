@@ -19,6 +19,9 @@ const game = {
     prevGuesses: [],
     play() {
         // 1) Generate a secret number
+        this.setSmallestNum()
+        this.setBiggestNum()
+
         this.secretNum = Math.floor(Math.random() * 
         (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
 
@@ -68,7 +71,17 @@ const game = {
         } while(this.isValidInput(userInput, minNum, maxNum) === false)
         return userInput
     },
+    setSmallestNum(x) {
+        let message = 'Enter the smallest number'
+        this.smallestNum = this.getNumFromUser(message, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY)
+    },
+    setBiggestNum(x) {
+        let message = 'Enter the biggest number'
+        this.biggestNum = this.getNumFromUser(message, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY)
+    },
 }
+
+
 
 
 
