@@ -32,14 +32,14 @@ const game = {
 
     },
     getGuess() {        
-        // 1) Prompt user for a number
         let message = `Enter a guess between ${this.smallestNum} and ${this.biggestNum}`
         let userInput = null
-        // 2) validate input
+        // 1) Prompt user for a number
         do {
             userInput = window.prompt(message)
             userInput = parseInt(userInput) // convert input to number
-        } while(this.validateUserInput(userInput) === false)
+        } while(this.validateUserInput(userInput) === false) // 2) validate input
+
         return userInput
     },
     validateUserInput(input) {
