@@ -18,16 +18,27 @@ const game = {
     secretNum: null,
     prevGuesses: [],
     play() {
+        // 1) Generate a secret number
         this.secretNum = Math.floor(Math.random() * 
         (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
+
+        // 2) Ask the user for a guess while guess is not the secret number
+        // track all the guesses in an array
+        let newGuess = ''
+        do {
+            newGuess = this.getGuess()
+            this.prevGuesses.push(newGuess)
+        } while(newGuess !== this.secretNum)
+
     },
     getGuess() {        
         // 1) Prompt user for a number
         let message = `Enter a guess between ${this.smallestNum} and ${this.biggestNum}`
         let userInput = null
+        // 2) validate input
         do {
             userInput = window.prompt(message)
-            userInput = parseInt(userInput) // convert to number
+            userInput = parseInt(userInput) // convert input to number
         } while(this.validateUserInput(userInput) === false)
         return userInput
     },
@@ -37,6 +48,16 @@ const game = {
         return (inputIsNumber && inputIsInRange) ? input : false
     },
 }
+
+
+
+
+
+
+
+
+
+
 
 
 const testValidateUserInput = () => {
