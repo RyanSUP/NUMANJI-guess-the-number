@@ -34,20 +34,9 @@ const game = {
     },
     getGuess() {        
         let message = `Enter a guess between ${this.smallestNum} and ${this.biggestNum}`
-        let userInput = null
-        let isNumber = null
-        let isInRange = null
-        // 1) Prompt user for a number
-        do {
-            userInput = window.prompt(message)
-            userInput = parseInt(userInput) // convert input to number
-            
-            // 2) validate input
-            isNumber = (typeof userInput === 'number')
-            isInRange = (userInput >= this.smallestNum && userInput <= this.biggestNum)
-        } while((isNumber && isInRange) === false)
+        let guess = this.getNumFromUser(message, this.smallestNum, this.biggestNum)
 
-        return userInput
+        return guess
     },
     render(guess) {
         if(guess === this.secretNum) {
@@ -67,20 +56,24 @@ const game = {
             console.log(`Previous guesses: ${prevGuessesString}`)
         }
     },
+    isValidInput(input, min, max) {
+        let isInRange = (input >= min && input <= max)
+        let isNumber = Number.isInteger(input)
+        return (isInRange && isNumber)
+    },
+    getNumFromUser(message, minNum, maxNum) {
+        do {
+            userInput = window.prompt(message)
+            userInput = parseInt(userInput) // convert input to number
+        } while(this.isValidInput(userInput, minNum, maxNum) === false)
+        return userInput
+    },
 }
 
 
 
 
-
-
-
-
-
-
-
-
-const testValidateUserInput = () => {
+const testInputs = () => {
     let knownValidNumbers = []
     for(let i = game.smallestNum; i <= game.biggestNum; i++) {
         knownValidNumbers.push(i)
@@ -90,6 +83,8 @@ const testValidateUserInput = () => {
         null, 
         NaN, 
         Infinity, 
+        false,
+        true,
         {}, 
         [],
         game.biggestNum + 1,
@@ -98,6 +93,7 @@ const testValidateUserInput = () => {
         '',
         '2',
         'null',
+         1.2,
         ...knownValidNumbers,
     ]
 
@@ -105,7 +101,7 @@ const testValidateUserInput = () => {
     let failed = []
 
     for(let testCase of testCases) {
-        let test = game.validateUserInput(testCase)
+        let test = game.isValidInput(testCase, game.smallestNum, game.biggestNum)
         if(test) {
             passed.push(testCase)
         } else {
@@ -125,4 +121,22 @@ const testValidateUserInput = () => {
     failed.forEach(failedTest => {
         console.log(failedTest)
     })
+
+    if(knownValidNumbers.length === passed.length) {
+        // I know the tests should push the numbers from knownValidNumbers to passed
+        // in the same order as they are in knownValidNumbers
+        let finalPass = true
+        for(let i = 0; i < knownValidNumbers.length; i++) {
+            if(knownValidNumbers[i] !== passed[i]) {
+                console.log('Test failed. Invalid input found')
+                console.log(`${passed[i]}`)
+                finalPass = false
+            }
+        }
+        if(finalPass) {
+            console.log('================ PASSED ALL TESTS ================')
+        } else {
+            console.log('================ FAILED FINAL TEST ================')
+        }
+    }
 }
