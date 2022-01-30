@@ -57,18 +57,18 @@ const game = {
         if(guess === this.secretNum) {
             this.winGame()
         } else {
-            let hint = null
             if(guess > this.secretNum) {
-                hint = 'high'
                 this.biggestNum = guess
             } else {
-                hint = 'low'
                 this.smallestNum = guess
             }
-            let prevGuessesString = this.prevGuesses.join(' ')
-            window.alert(`Your guess is too ${hint}`
-            `Previous guesses: ${prevGuessesString}`)
+            this.showHint(guess)
         }
+    },
+    showHint(guess) {
+        let hint = (guess > this.secretNum) ? 'high' : 'low'
+        let prevGuessesString = this.prevGuesses.join(' ')
+        window.alert(`Your guess is too ${hint}\nPrevious guesses: ${prevGuessesString}`)    
     },
     winGame() {
         let numberOfGuess = this.prevGuesses.length
