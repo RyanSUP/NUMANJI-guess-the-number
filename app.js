@@ -65,17 +65,14 @@ const game = {
                 hint = 'low'
                 this.smallestNum = guess
             }
-            console.log(`Your guess is too ${hint}`)
-            this.printPrevGuesses()
+            let prevGuessesString = this.prevGuesses.join(' ')
+            window.alert(`Your guess is too ${hint}`
+            `Previous guesses: ${prevGuessesString}`)
         }
     },
     winGame() {
         let numberOfGuess = this.prevGuesses.length
-        console.log(`Congrats! You guessed the number in ${numberOfGuess} guesses!`)
-    },
-    printPrevGuesses() {
-        let prevGuessesString = this.prevGuesses.join(' ')
-        console.log(`Previous guesses: ${prevGuessesString}`)
+        window.alert(`Congrats! You guessed the number in ${numberOfGuess} guesses!`)
     },
     isValidInput(input, min, max) {
         let isInRange = (input >= min && input <= max)
@@ -88,7 +85,6 @@ const game = {
             userInput = window.prompt(message)
             userInput = parseInt(userInput) // convert input to number
         } while(this.isValidInput(userInput, minNum, maxNum) === false)
-        console.log(game)
         return userInput
     },
 }
