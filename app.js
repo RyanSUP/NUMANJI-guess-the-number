@@ -21,8 +21,7 @@ const game = {
 
         this.promptForRange()
         this.generateSecretNumber()
-
-        let newGuess = null
+        // ! newGuess is never declared -- how is this working?!
         do {
             newGuess = this.getGuess()
             this.prevGuesses.push(newGuess)
@@ -79,9 +78,11 @@ const game = {
     },
     getNumFromUser(message, minNum, maxNum) {
         do {
+            // ! User input is never declared -- how is this working?!
             userInput = window.prompt(message)
             userInput = parseInt(userInput) // convert input to number
         } while(this.isValidInput(userInput, minNum, maxNum) === false)
+        console.log(game)
         return userInput
     },
 }
@@ -91,11 +92,16 @@ const game = {
 
 
 
-const testInputs = () => {
-    let knownValidNumbers = []
-    for(let i = game.smallestNum; i <= game.biggestNum; i++) {
-        knownValidNumbers.push(i)
+function testInputs(minValidNum, maxValidNum) {
+    // The numbers in validNumbers should be the only valid inputs
+    let validInputs = []
+    for(let i = minValidNum; i <= maxValidNum; i++) {
+        validInputs.push(i)
     }
+
+    // Try to break it.
+    // window.prompt returns a user input string.
+    // I'm only expecting strings (black swan -- expect the unexpected!) 
     let testCases = [ 
         undefined, 
         null, 
@@ -112,40 +118,32 @@ const testInputs = () => {
         '2',
         'null',
          1.2,
-        ...knownValidNumbers,
+        ...validInputs,
     ]
 
-    let passed = []
+    let passed = [] // this should end up being an exact duplicate of validInputs
     let failed = []
 
+
+    // run the tests
     for(let testCase of testCases) {
-        let test = game.isValidInput(testCase, game.smallestNum, game.biggestNum)
-        if(test) {
+        let result = game.isValidInput(testCase, minValidNum, maxValidNum)
+        if(result) {
             passed.push(testCase)
         } else {
             failed.push(testCase)
         }
 
-        // (test) ? passed.push(testCase) : failed.push(testCase)
-        // Error - 'test cannot be accessed before it is defined' ??
+        //(result) ? passed.push(testCase) : failed.push(testCase)
+        // Error - 'cannot access result before initalization' ??
     }
 
-    console.log(' ================ PASSED ================ ')
-    passed.forEach(passedTest => {
-        console.log(passedTest)
-    })
-
-    console.log(' ================ FAILED ================ ')
-    failed.forEach(failedTest => {
-        console.log(failedTest)
-    })
-
-    if(knownValidNumbers.length === passed.length) {
-        // I know the tests should push the numbers from knownValidNumbers to passed
-        // in the same order as they are in knownValidNumbers
+    // validInputs and the passed arrays should have the same elements in the same order
+    // in the same order as they are in validInputs
+    if(validInputs.length === passed.length) {
         let finalPass = true
-        for(let i = 0; i < knownValidNumbers.length; i++) {
-            if(knownValidNumbers[i] !== passed[i]) {
+        for(let i = 0; i < validInputs.length; i++) {
+            if(validInputs[i] !== passed[i]) {
                 console.log('Test failed. Invalid input found')
                 console.log(`${passed[i]}`)
                 finalPass = false
@@ -154,7 +152,7 @@ const testInputs = () => {
         if(finalPass) {
             console.log('================ PASSED ALL TESTS ================')
         } else {
-            console.log('================ FAILED FINAL TEST ================')
+            console.log('================ FAILED TESTS ================')
         }
     }
 }
