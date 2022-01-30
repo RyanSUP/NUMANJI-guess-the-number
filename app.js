@@ -18,16 +18,14 @@ const game = {
     secretNum: null,
     prevGuesses: [],
     play() {
-
         this.promptForRange()
         this.generateSecretNumber()
-        // ! newGuess is never declared -- how is this working?!
+        let newGuess = null
         do {
             newGuess = this.getGuess()
             this.prevGuesses.push(newGuess)
             this.render(newGuess)
         } while(newGuess !== this.secretNum)
-
     },
     promptForRange() {
         this.smallestNum = this.getNumFromUser(
@@ -50,7 +48,6 @@ const game = {
     getGuess() {        
         let message = `Enter a guess between ${this.smallestNum} and ${this.biggestNum}`
         let guess = this.getNumFromUser(message, this.smallestNum, this.biggestNum)
-
         return guess
     },
     render(guess) {
@@ -79,15 +76,14 @@ const game = {
         return (isInRange && isNumber)
     },
     getNumFromUser(message, minNum, maxNum) {
+        let userInput = null
         do {
-            // ! User input is never declared -- how is this working?!
             userInput = window.prompt(message)
             userInput = parseInt(userInput) // convert input to number
         } while(this.isValidInput(userInput, minNum, maxNum) === false)
         return userInput
     },
 }
-
 
 
 
