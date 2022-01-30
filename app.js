@@ -1,5 +1,5 @@
 /**
- GUESS THE NUMBER!
+ GUESS THE NUMBER! (going hard with the functional programming!)
  ## Features
     
  - Allow the player to continually be prompted to enter their guess at the secret number until they guess correctly.
@@ -66,10 +66,13 @@ const game = {
                 hint = 'low'
                 this.smallestNum = guess
             }
-            let prevGuessesString = this.prevGuesses.join(' ')
             console.log(`Your guess is too ${hint}`)
-            console.log(`Previous guesses: ${prevGuessesString}`)
+            this.printPrevGuesses()
         }
+    },
+    printPrevGuesses() {
+        let prevGuessesString = this.prevGuesses.join(' ')
+        console.log(`Previous guesses: ${prevGuessesString}`)
     },
     isValidInput(input, min, max) {
         let isInRange = (input >= min && input <= max)
