@@ -60,7 +60,7 @@ const game = {
 
         this.biggestNum = this.getNumFromUser(
             'Enter the biggest number', 
-            Number.NEGATIVE_INFINITY, 
+            this.smallestNum, 
             Number.POSITIVE_INFINITY
         
         )
