@@ -12,11 +12,13 @@
  */
 
 const game = {
-    title: 'Guess the Number!',
+    // Properties of game
     biggestNum: 100,
+    prevGuesses: [],
+    title: 'Guess the Number!',
     smallestNum: 1,
     secretNum: null,
-    prevGuesses: [],
+    // Methods of game
     generateSecretNumber() {
         this.secretNum = Math.floor(Math.random() * 
         (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
