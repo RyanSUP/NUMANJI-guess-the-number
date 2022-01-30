@@ -18,15 +18,10 @@ const game = {
     secretNum: null,
     prevGuesses: [],
     play() {
-        // 1) Generate a secret number
-        this.setSmallestNum()
-        this.setBiggestNum()
 
-        this.secretNum = Math.floor(Math.random() * 
-        (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
+        this.promptForRange()
+        this.generateSecretNumber()
 
-        // 2) Ask the user for a guess while guess is not the secret number
-        // track all the guesses in an array
         let newGuess = null
         do {
             newGuess = this.getGuess()
@@ -34,6 +29,24 @@ const game = {
             this.render(newGuess)
         } while(newGuess !== this.secretNum)
 
+    },
+    promptForRange() {
+        this.smallestNum = this.getNumFromUser(
+            'Enter the smallest number', 
+            Number.NEGATIVE_INFINITY, 
+            Number.POSITIVE_INFINITY
+        )
+
+        this.biggestNum = this.getNumFromUser(
+            'Enter the biggest number', 
+            Number.NEGATIVE_INFINITY, 
+            Number.POSITIVE_INFINITY
+        
+        )
+    },
+    generateSecretNumber() {
+        this.secretNum = Math.floor(Math.random() * 
+        (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
     },
     getGuess() {        
         let message = `Enter a guess between ${this.smallestNum} and ${this.biggestNum}`
@@ -70,14 +83,6 @@ const game = {
             userInput = parseInt(userInput) // convert input to number
         } while(this.isValidInput(userInput, minNum, maxNum) === false)
         return userInput
-    },
-    setSmallestNum() {
-        let message = 'Enter the smallest number'
-        this.smallestNum = this.getNumFromUser(message, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY)
-    },
-    setBiggestNum() {
-        let message = 'Enter the biggest number'
-        this.biggestNum = this.getNumFromUser(message, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY)
     },
 }
 
