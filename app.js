@@ -60,17 +60,24 @@ const game = {
     },
     promptForRange() {
         this.smallestNum = this.getNumFromUser(
-            'Enter the smallest number', 
+            'Enter the smallest number in the search range', 
             Number.NEGATIVE_INFINITY, 
             Number.POSITIVE_INFINITY
         )
 
         this.biggestNum = this.getNumFromUser(
-            'Enter the biggest number', 
+            'Enter the biggest number in the search range', 
             this.smallestNum, 
             Number.POSITIVE_INFINITY
         
         )
+    },
+    promptGameStart() {
+        let message = 'Can YOU guess the number?\nPress OK to challenge your binary search abilities!'
+        let start = window.confirm(message)
+        if(start) {
+            game.play()
+        }
     },
     render(guess) {
         if(guess === this.secretNum) {
@@ -95,7 +102,7 @@ const game = {
     },
 }
 
-game.play()
+game.promptGameStart()
 
 // testInputs(1,100)
 function testInputs(minValidNum, maxValidNum) {
