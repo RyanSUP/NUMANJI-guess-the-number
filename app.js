@@ -55,8 +55,7 @@ const game = {
     },
     render(guess) {
         if(guess === this.secretNum) {
-            let numberOfGuess = this.prevGuesses.length
-            console.log(`Congrats! You guessed the number in ${numberOfGuess} guesses!`)
+            this.winGame()
         } else {
             let hint = null
             if(guess > this.secretNum) {
@@ -69,6 +68,10 @@ const game = {
             console.log(`Your guess is too ${hint}`)
             this.printPrevGuesses()
         }
+    },
+    winGame() {
+        let numberOfGuess = this.prevGuesses.length
+        console.log(`Congrats! You guessed the number in ${numberOfGuess} guesses!`)
     },
     printPrevGuesses() {
         let prevGuessesString = this.prevGuesses.join(' ')
