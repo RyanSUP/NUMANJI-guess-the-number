@@ -39,14 +39,19 @@ const game = {
         } while(this.isValidInput(userInput, minNum, maxNum) === false)
         return userInput
     },
+    initializeGame() {
+        this.prevGuesses = []
+        this.promptForRange()
+        this.generateSecretNumber()
+    },
     isValidInput(input, minNum, maxNum) {
         let isInRange = (input >= minNum && input <= maxNum)
         let isNumber = Number.isInteger(input)
         return (isInRange && isNumber)
     },
     play() {
-        this.promptForRange()
-        this.generateSecretNumber()
+        this.initializeGame()
+        // Main game loop
         let newGuess = null
         do {
             newGuess = this.getGuess()
@@ -57,7 +62,6 @@ const game = {
     promptForNewGame() {
         let newGame = window.confirm('Play again?')
         if (newGame) {
-            this.prevGuesses = []
             game.play()
         }
     },
