@@ -57,13 +57,12 @@ const game = {
         if(guess === this.secretNum) {
             this.winGame()
         } else {
-            if(guess > this.secretNum) {
-                this.biggestNum = guess
-            } else {
-                this.smallestNum = guess
-            }
+            this.updateRange(guess)
             this.showHint(guess)
         }
+    },
+    updateRange(guess) {
+        (guess > this.secretNum) ? this.biggestNum = guess : this.smallestNum = guess
     },
     showHint(guess) {
         let hint = (guess > this.secretNum) ? 'high' : 'low'
