@@ -15,13 +15,15 @@ const game = {
     // Properties of game
     biggestNum: 100,
     prevGuesses: [],
-    title: 'Guess the Number!',
     smallestNum: 1,
     secretNum: null,
+    title: 'Guess the Number!',
     // Methods of game
     generateSecretNumber() {
-        this.secretNum = Math.floor(Math.random() * 
-        (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
+        this.secretNum = Math.floor(
+            Math.random() * 
+            (this.biggestNum - this.smallestNum + 1)
+        ) + this.smallestNum
     },
     getGuess() {        
         let message = `Enter a guess between ${this.smallestNum} and ${this.biggestNum}`
@@ -36,8 +38,8 @@ const game = {
         } while(this.isValidInput(userInput, minNum, maxNum) === false)
         return userInput
     },
-    isValidInput(input, min, max) {
-        let isInRange = (input >= min && input <= max)
+    isValidInput(input, minNum, maxNum) {
+        let isInRange = (input >= minNum && input <= maxNum)
         let isNumber = Number.isInteger(input)
         return (isInRange && isNumber)
     },
@@ -67,7 +69,7 @@ const game = {
 
         this.biggestNum = this.getNumFromUser(
             'Enter the biggest number in the search range', 
-            this.smallestNum, 
+            this.smallestNum + 1, 
             Number.POSITIVE_INFINITY
         
         )
@@ -104,6 +106,33 @@ const game = {
 
 game.promptGameStart()
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // testInputs(1,100)
 function testInputs(minValidNum, maxValidNum) {
     // The numbers in validNumbers should be the only valid inputs
@@ -114,7 +143,9 @@ function testInputs(minValidNum, maxValidNum) {
 
     // Try to break it.
     // window.prompt returns a user input string.
-    // I'm only expecting strings (black swan -- expect the unexpected!) 
+    // that input string is always converted to an int with parseInt.
+    // parse int will return a whole number or NaN, so those are the only expected values
+    // (black swan -- expect the unexpected!) 
     let testCases = [ 
         undefined, 
         null, 
@@ -124,8 +155,8 @@ function testInputs(minValidNum, maxValidNum) {
         true,
         {}, 
         [],
-        game.biggestNum + 1,
-        game.smallestNum - 1,
+        maxValidNum + 1,
+        minValidNum - 1,
         'big horse neck',
         '',
         '2',
@@ -167,5 +198,7 @@ function testInputs(minValidNum, maxValidNum) {
         } else {
             console.log('================ FAILED TESTS ================')
         }
+    } else {
+        console.log('================ FAILED TESTS ================')
     }
 }
