@@ -51,6 +51,13 @@ const game = {
             this.render(newGuess)
         } while(newGuess !== this.secretNum)
     },
+    promptForNewGame() {
+        let newGame = window.confirm('Play again?')
+        if (newGame) {
+            this.prevGuesses = []
+            game.play()
+        }
+    },
     promptForRange() {
         this.smallestNum = this.getNumFromUser(
             'Enter the smallest number', 
@@ -68,6 +75,7 @@ const game = {
     render(guess) {
         if(guess === this.secretNum) {
             this.winGame()
+            this.promptForNewGame()
         } else {
             this.updateRange(guess)
             this.showHint(guess)
