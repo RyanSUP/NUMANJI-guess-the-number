@@ -17,6 +17,28 @@ const game = {
     smallestNum: 1,
     secretNum: null,
     prevGuesses: [],
+    generateSecretNumber() {
+        this.secretNum = Math.floor(Math.random() * 
+        (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
+    },
+    getGuess() {        
+        let message = `Enter a guess between ${this.smallestNum} and ${this.biggestNum}`
+        let guess = this.getNumFromUser(message, this.smallestNum, this.biggestNum)
+        return guess
+    },
+    getNumFromUser(message, minNum, maxNum) {
+        let userInput = null
+        do {
+            userInput = window.prompt(message)
+            userInput = parseInt(userInput) // convert input to number
+        } while(this.isValidInput(userInput, minNum, maxNum) === false)
+        return userInput
+    },
+    isValidInput(input, min, max) {
+        let isInRange = (input >= min && input <= max)
+        let isNumber = Number.isInteger(input)
+        return (isInRange && isNumber)
+    },
     play() {
         this.promptForRange()
         this.generateSecretNumber()
@@ -41,15 +63,6 @@ const game = {
         
         )
     },
-    generateSecretNumber() {
-        this.secretNum = Math.floor(Math.random() * 
-        (this.biggestNum - this.smallestNum + 1)) + this.smallestNum
-    },
-    getGuess() {        
-        let message = `Enter a guess between ${this.smallestNum} and ${this.biggestNum}`
-        let guess = this.getNumFromUser(message, this.smallestNum, this.biggestNum)
-        return guess
-    },
     render(guess) {
         if(guess === this.secretNum) {
             this.winGame()
@@ -58,37 +71,23 @@ const game = {
             this.showHint(guess)
         }
     },
-    updateRange(guess) {
-        (guess > this.secretNum) ? this.biggestNum = guess : this.smallestNum = guess
-    },
     showHint(guess) {
         let hint = (guess > this.secretNum) ? 'high' : 'low'
         let prevGuessesString = this.prevGuesses.join(' ')
         window.alert(`Your guess is too ${hint}\nPrevious guesses: ${prevGuessesString}`)    
     },
+    updateRange(guess) {
+        (guess > this.secretNum) ? this.biggestNum = guess : this.smallestNum = guess
+    },
     winGame() {
         let numberOfGuess = this.prevGuesses.length
         window.alert(`Congrats! You guessed the number in ${numberOfGuess} guesses!`)
     },
-    isValidInput(input, min, max) {
-        let isInRange = (input >= min && input <= max)
-        let isNumber = Number.isInteger(input)
-        return (isInRange && isNumber)
-    },
-    getNumFromUser(message, minNum, maxNum) {
-        let userInput = null
-        do {
-            userInput = window.prompt(message)
-            userInput = parseInt(userInput) // convert input to number
-        } while(this.isValidInput(userInput, minNum, maxNum) === false)
-        return userInput
-    },
 }
 
+game.play()
 
-
-
-
+// testInputs(1,100)
 function testInputs(minValidNum, maxValidNum) {
     // The numbers in validNumbers should be the only valid inputs
     let validInputs = []
