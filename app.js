@@ -29,12 +29,12 @@ const game = {
     getGuess() {        
         let message = 
 `~=~= ADVENTURER =~=~
-Enter a guess between the numbers
-${this.smallestNum} and ${this.biggestNum}, just don't blunder!`
-        let guess = this.getNumFromUser(message, this.smallestNum, this.biggestNum)
+ENTER A GUESS BETWEEN THE NUMBERS
+${this.smallestNum} AND ${this.biggestNum}, JUST DON'T BLUNDER!`
+        let guess = this.getNumFromUser(message)
         return guess
     },
-    getNumFromUser(message, minNum, maxNum) {
+    getNumFromUser(message, minNum = Number.NEGATIVE_INFINITY, maxNum = Number.POSITIVE_INFINITY) {
         let userInput = null
         do {
             userInput = window.prompt(message)
@@ -60,10 +60,14 @@ ${this.smallestNum} and ${this.biggestNum}, just don't blunder!`
             newGuess = this.getGuess()
             this.prevGuesses.push(newGuess)
             this.render(newGuess)
+            if(newGuess !== this.secretNum) {
+                this.updateRange(newGuess)
+            }
+
         } while(newGuess !== this.secretNum)
         // Once number is guessed
-        this.winGame()
         this.promptForNewGame()
+        return
     },
     promptForNewGame() {
         let newGame = window.confirm('Play again?')
@@ -79,18 +83,9 @@ ${this.smallestNum} and ${this.biggestNum}, just don't blunder!`
         } while(input !== 'NUMANJI')
     },
     promptForRange() {
-        this.smallestNum = this.getNumFromUser(
-            'Enter the smallest number NUMANJI should think of...', 
-            Number.NEGATIVE_INFINITY, 
-            Number.POSITIVE_INFINITY
-        )
+        this.smallestNum = this.getNumFromUser('Enter the smallest number NUMANJI should think of...')
 
-        this.biggestNum = this.getNumFromUser(
-            'Enter the biggest number NUMANJI should think of...', 
-            this.smallestNum + 1, 
-            Number.POSITIVE_INFINITY
-        
-        )
+        this.biggestNum = this.getNumFromUser('Enter the biggest number NUMANJI should think of...', this.smallestNum + 1)
     },
     promptGameStart() {
        // let message = 'Can YOU guess the number?\nPress OK to challenge your binary search abilities!'
@@ -110,12 +105,13 @@ AND CALLED OUT ITS NAME`
         }
     },
     render(guess) {
-        if(guess !== this.secretNum) {
-            this.updateRange(guess)
-            this.showHint(guess)
-        }
+        if(guess === this.secretNum) {
+            this.renderWin()
+        } else {
+            this.renderHint(guess)
+        } 
     },
-    showHint(guess) {
+    renderHint(guess) {
         let hint
         if(guess > this.secretNum){
             hint = 
@@ -127,12 +123,12 @@ AND CALLED OUT ITS NAME`
 ~= YOU GUESSED A NUMBER THAT IS LOW =~`
         }
         let prevGuessesString = this.prevGuesses.join(' ')
-        window.alert(`${hint}\nPrevious guesses: ${prevGuessesString}`)    
+        window.alert(`${hint}\nPrevious guesses: ${prevGuessesString}`)   
     },
     updateRange(guess) {
         (guess > this.secretNum) ? this.biggestNum = guess : this.smallestNum = guess
     },
-    winGame() {
+    renderWin() {
         let numberOfGuess = this.prevGuesses.length
         window.alert(`You have guessed NUMANJI in ${numberOfGuess} guesses...`)
         this.promptForNumanji()
