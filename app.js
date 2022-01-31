@@ -63,7 +63,6 @@ ${this.smallestNum} AND ${this.biggestNum}, JUST DON'T BLUNDER!`
             if(newGuess !== this.secretNum) {
                 this.updateRange(newGuess)
             }
-
         } while(newGuess !== this.secretNum)
         // Once number is guessed
         this.promptForNewGame()
@@ -107,6 +106,8 @@ AND CALLED OUT ITS NAME`
     render(guess) {
         if(guess === this.secretNum) {
             this.renderWin()
+            this.promptForNumanji()
+
         } else {
             this.renderHint(guess)
         } 
@@ -131,7 +132,6 @@ AND CALLED OUT ITS NAME`
     renderWin() {
         let numberOfGuess = this.prevGuesses.length
         window.alert(`You have guessed NUMANJI in ${numberOfGuess} guesses...`)
-        this.promptForNumanji()
     },
 }
 
