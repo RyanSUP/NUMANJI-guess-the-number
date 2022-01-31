@@ -61,6 +61,9 @@ ${this.smallestNum} and ${this.biggestNum}, just don't blunder!`
             this.prevGuesses.push(newGuess)
             this.render(newGuess)
         } while(newGuess !== this.secretNum)
+        // Once number is guessed
+        this.winGame()
+        this.promptForNewGame()
     },
     promptForNewGame() {
         let newGame = window.confirm('Play again?')
@@ -107,10 +110,7 @@ AND CALLED OUT ITS NAME`
         }
     },
     render(guess) {
-        if(guess === this.secretNum) {
-            this.winGame()
-            this.promptForNewGame()
-        } else {
+        if(guess !== this.secretNum) {
             this.updateRange(guess)
             this.showHint(guess)
         }
