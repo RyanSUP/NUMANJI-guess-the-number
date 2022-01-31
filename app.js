@@ -18,7 +18,7 @@ const game = {
     prevGuesses: [],
     smallestNum: 1,
     secretNum: null,
-    title: 'Guess the Number!',
+    title: 'NUMANJI',
     // Methods of game
     generateSecretNumber() {
         this.secretNum = Math.floor(
@@ -27,7 +27,10 @@ const game = {
         ) + this.smallestNum
     },
     getGuess() {        
-        let message = `Enter a guess between ${this.smallestNum} and ${this.biggestNum}`
+        let message = 
+`~=~= ADVENTURER =~=~
+Enter a guess between the numbers
+${this.smallestNum} and ${this.biggestNum}, just don't blunder!`
         let guess = this.getNumFromUser(message, this.smallestNum, this.biggestNum)
         return guess
     },
@@ -51,7 +54,7 @@ const game = {
     },
     play() {
         this.initializeGame()
-        // Main game loop
+        // Main game
         let newGuess = null
         do {
             newGuess = this.getGuess()
@@ -65,22 +68,39 @@ const game = {
             game.play()
         }
     },
+    promptForNumanji() {
+        let input
+        do {
+            input = window.prompt('CALL OUT ITS NAME!')
+            input = input.toUpperCase()
+        } while(input !== 'NUMANJI')
+    },
     promptForRange() {
         this.smallestNum = this.getNumFromUser(
-            'Enter the smallest number in the search range', 
+            'Enter the smallest number NUMANJI should think of...', 
             Number.NEGATIVE_INFINITY, 
             Number.POSITIVE_INFINITY
         )
 
         this.biggestNum = this.getNumFromUser(
-            'Enter the biggest number in the search range', 
+            'Enter the biggest number NUMANJI should think of...', 
             this.smallestNum + 1, 
             Number.POSITIVE_INFINITY
         
         )
     },
     promptGameStart() {
-        let message = 'Can YOU guess the number?\nPress OK to challenge your binary search abilities!'
+       // let message = 'Can YOU guess the number?\nPress OK to challenge your binary search abilities!'
+        let message =
+`~=~=~= NUMANJI =~=~=~
+A GAME FOR THOSE WHO SEEK TO FIND
+A RANDOM NUMBER PRE-DEFINED
+~= ADVENTURERS BEWARE =~
+DO NOT BEGIN UNLESS YOU INTEND TO FINISH!
+THE EXCITING CONSEQUENCES OF
+THE GAME WILL VANISH ONLY WHEN
+A PLAYER HAS GUESSED NUMANJI 
+AND CALLED OUT ITS NAME`
         let start = window.confirm(message)
         if(start) {
             game.play()
@@ -96,16 +116,25 @@ const game = {
         }
     },
     showHint(guess) {
-        let hint = (guess > this.secretNum) ? 'high' : 'low'
+        let hint
+        if(guess > this.secretNum){
+            hint = 
+`THE CODE YOU WROTE DOES NOT LOOK D.R.Y.
+~= YOU GUESSED A NUMBER WAY TOO HIGH =~`
+        } else {
+`CLEAR YOUR CACHE, YOUR BROWSER IS SLOW
+~= YOU GUESSED A NUMBER THAT IS LOW =~`
+        }
         let prevGuessesString = this.prevGuesses.join(' ')
-        window.alert(`Your guess is too ${hint}\nPrevious guesses: ${prevGuessesString}`)    
+        window.alert(`${hint}\nPrevious guesses: ${prevGuessesString}`)    
     },
     updateRange(guess) {
         (guess > this.secretNum) ? this.biggestNum = guess : this.smallestNum = guess
     },
     winGame() {
         let numberOfGuess = this.prevGuesses.length
-        window.alert(`Congrats! You guessed the number in ${numberOfGuess} guesses!`)
+        window.alert(`You have guessed NUMANJI in ${numberOfGuess} guesses...`)
+        this.promptForNumanji()
     },
 }
 
